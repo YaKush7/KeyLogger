@@ -1,7 +1,6 @@
 #include <windows.h>
 #include <winuser.h>
 #include <bits/stdc++.h>
-#include <conio.h>
 
 #include "key_hook.h"
 
@@ -23,6 +22,5 @@ int main()
     else
         return 2;
 
-    getch();
     return 0;
 }
