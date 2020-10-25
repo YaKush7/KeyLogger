@@ -4,19 +4,35 @@
 #include <string>
 #include <windows.h>
 #include <fstream>
+
+#include "date_time.h"
+
 using namespace std;
 
 namespace file_handler
 {
-    bool make_folders(string path)
+    const string path = "D:\\project\\testing\\";
+    const string name = "test_file.txt";
+
+    void write_logs(const string &msg)
+    {
+        fstream file(path + "logs.txt", ios::app);
+        if (!file)
+            return;
+
+        file << "<<" << date_time::get_date_time() << ">>  " << msg << "\n";
+        file.close();
+    }
+
+    bool make_folders(string file_path)
     {
         bool check;
-        for (char &c : path)
+        for (char &c : file_path)
         {
             if (c == '\\')
             {
                 c = '\0';
-                check = (bool)(CreateDirectory(path.c_str(), NULL) || GetLastError() == ERROR_ALREADY_EXISTS);
+                check = (bool)(CreateDirectory(file_path.c_str(), NULL) || GetLastError() == ERROR_ALREADY_EXISTS);
                 if (!check)
                     return false;
                 c = '\\';
@@ -25,7 +41,7 @@ namespace file_handler
         return true;
     }
 
-    string get_full_path(const string &path = "D:\\project\\testing\\", const string &name = "test_file.txt")
+    string get_full_path()
     {
         if (path[path.length() - 1] == '\\')
             return path + name;
@@ -33,26 +49,41 @@ namespace file_handler
             return path + '\\' + name;
     }
 
-    bool initial(const string &path = "D:\\project\\testing\\", const string &name = "test_file.txt")
+    bool initial()
     {
         bool check = make_folders(path);
         if (!check)
+        {
+            write_logs("Can't create folders --> " + path);
             return false;
+        }
 
-        fstream file(get_full_path(path, name), ios::app);
+        fstream file(get_full_path(), ios::app);
         if (!file)
+        {
+            write_logs("Can't create/open intercept file --> " + get_full_path());
             return false;
+        }
+
+        file << "<<" << date_time::get_date_time() << ">>\n";
         file.close();
+        write_logs("Successfully created file/folders");
         return true;
     }
 
-    bool write(const string &captured, const string full_path = get_full_path())
+    bool write_intercept(const string &captured)
     {
+        const string full_path = get_full_path();
         fstream file(full_path, ios::app);
         if (!file)
+        {
+            write_logs("Can't create/open intercept file --> " + get_full_path());
             return false;
-        file << captured;
+        }
+
+        file << captured << "\n";
         file.close();
+        write_logs("Successfully wrote intercept");
         return true;
     }
 

