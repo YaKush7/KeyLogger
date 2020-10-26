@@ -20,7 +20,7 @@ int main()
         return 0;
 
     thread_handler::run = true;
-    future<void> th = async(launch::async, thread_handler::timer, 60);
+    future<void> th = async(launch::async, thread_handler::timer, 10);
 
     MessageBoxW(NULL, L"\tHooking\t", L"Close to close XD", MB_ICONEXCLAMATION | MB_SYSTEMMODAL);
 
