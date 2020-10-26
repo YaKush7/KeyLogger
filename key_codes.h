@@ -1,5 +1,5 @@
-#ifndef key_codes
-#define key_codes
+#ifndef KEY_CODES
+#define KEY_CODES
 #include <string>
 #include <map>
 

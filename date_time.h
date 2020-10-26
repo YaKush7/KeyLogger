@@ -1,5 +1,5 @@
-#ifndef date_time
-#define date_time
+#ifndef DATE_TIME
+#define DATE_TIME
 
 #include <chrono>
 #include <sstream>

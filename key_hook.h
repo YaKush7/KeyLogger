@@ -1,5 +1,5 @@
-#ifndef key_hook
-#define key_hook
+#ifndef KEY_HOOK
+#define KEY_HOOK
 
 #include <windows.h>
 #include "key_proc.h"

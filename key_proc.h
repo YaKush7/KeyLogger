@@ -1,5 +1,5 @@
-#ifndef key_proc
-#define key_proc
+#ifndef KEY_PROC
+#define KEY_PROC
 
 #include <winuser.h>
 #include <sstream>

