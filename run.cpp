@@ -1,6 +1,5 @@
 #include <windows.h>
 #include <winuser.h>
-#include <bits/stdc++.h>
 #include <future>
 
 #include "key_hook.h"
