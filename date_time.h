@@ -24,11 +24,12 @@ namespace date_time
         return ss.str();
     }
 
-    string get_date_time()
+    string get_date_time(const string &s1 = "/", const string &s2 = ":")
     {
         time_t now = chrono::system_clock::to_time_t(chrono::system_clock::now());
+        string s = "%Y" + s1 + "%m" + s1 + "%d  %I" + s2 + "%M" + s2 + "%S %p";
         stringstream ss;
-        ss << std::put_time(std::localtime(&now), "%Y/%m/%d  %I:%M:%S %p");
+        ss << std::put_time(std::localtime(&now), s.c_str());
         return ss.str();
     }
 
