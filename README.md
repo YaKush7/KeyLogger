@@ -2,12 +2,12 @@
 
 Keylogger made using Windows API in C++
 
-### Features :white_check_mark:
+### Features
 
-- Saves files in AppData :open_file_folder:
-- Genrating log files :page_facing_up:
-- Encrypts the intercept before writing to file :
+- :open_file_folder: Saves files in AppData
+- :page_facing_up: Genrating log files
+- :computer: Encrypts the intercept before writing to file
 
-### In Progress :wrench:
+### In Progress
 
-- Mail saved intercept to atacker :satellite:
+- :satellite: Mail saved intercept to atacker
