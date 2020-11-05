@@ -5,9 +5,9 @@ Keylogger made using Windows API in C++
 ### Features
 
 - :open_file_folder: Saves files in AppData
-- :page_facing_up: Genrating log files
-- :computer: Encrypts the intercept before writing to file
+- :page_facing_up: Genrates log files
+- :computer: Encrypts intercept before writing it to the file
 
 ### In Progress
 
-- :satellite: Mail saved intercept to atacker
+- :satellite: Mailer for mailing saved intercept to atacker
